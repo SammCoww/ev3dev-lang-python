@@ -52,7 +52,7 @@ class EV3Tire(Wheel):
     comes in set 31313
     """
     def __init__(self):
-        Wheel.__init__(self, 43.2, 21)
+        Wheel.__init__(self, 56, 28)
 
 
 class EV3EducationSetRim(Wheel):

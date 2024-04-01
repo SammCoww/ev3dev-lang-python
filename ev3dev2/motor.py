@@ -2126,6 +2126,7 @@ class MoveTank(MotorSet):
                           target_angle=0,
                           sleep_time=0.01,
                           follow_for=follow_for_forever,
+                          desired_distance=20,
                           **kwargs):
         """
         PID gyro angle follower
@@ -2183,6 +2184,14 @@ class MoveTank(MotorSet):
             raise DeviceNotDefined(
                 "The 'gyro' variable must be defined with a GyroSensor. Example: tank.gyro = GyroSensor()")
 
+         # Get the current ultrasonic distance
+        current_distance_cm = self._ultrasonic_sensor.distance_centimeters
+
+        # Check if the distance is within the desired range
+        if current_distance_cm < desired_distance_cm:
+            # Implement your custom action (e.g., stop the robot)
+            self.stop()
+            raise FollowUltrasonicDistanceError("Too close to obstacle!")
         integral = 0.0
         last_error = 0.0
         derivative = 0.0
