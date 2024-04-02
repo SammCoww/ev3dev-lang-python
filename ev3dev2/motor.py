@@ -2125,8 +2125,8 @@ class MoveTank(MotorSet):
                           speed,
                           target_angle=0,
                           sleep_time=0.01,
-                          follow_for=follow_for_forever,
                           desired_distance=20,
+                          follow_for=follow_for_forever,
                           **kwargs):
         """
         PID gyro angle follower
