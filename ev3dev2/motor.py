@@ -2185,13 +2185,9 @@ class MoveTank(MotorSet):
                 "The 'gyro' variable must be defined with a GyroSensor. Example: tank.gyro = GyroSensor()")
 
          # Get the current ultrasonic distance
-        current_distance_cm = self._ultrasonic_sensor.distance_centimeters
 
         # Check if the distance is within the desired range
-        if current_distance_cm < desired_distance_cm:
-            # Implement your custom action (e.g., stop the robot)
-            self.stop()
-            raise FollowUltrasonicDistanceError("Too close to obstacle!")
+        
         integral = 0.0
         last_error = 0.0
         derivative = 0.0
@@ -2199,6 +2195,12 @@ class MoveTank(MotorSet):
         speed_native_units = speed.to_native_units(self.left_motor)
 
         while follow_for(self, **kwargs):
+            current_distance_cm = self._ultrasonic_sensor.distance_centimeters
+
+            if current_distance_cm < desired_distance_cm:
+                # Implement your custom action (e.g., stop the robot)
+                self.stop()
+                raise FollowUltrasonicDistanceError("Too close to obstacle!")
             current_angle = self._gyro.angle
             error = current_angle - target_angle
             integral = integral + error
